@@ -1,24 +1,16 @@
 terraform {
   required_providers {
     tls = {
-      source  = "hashicorp/tls"
+      source = "hashicorp/tls"
       version = "4.0.5"
     }
     google = {
-      source  = "hashicorp/google"
+      source = "hashicorp/google"
       version = "5.28.0"
     }
     local = {
-      source  = "hashicorp/local"
+      source = "hashicorp/local"
       version = "2.5.1"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "2.25.2"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.12.1"
     }
   }
 }
@@ -141,9 +133,9 @@ resource "google_container_node_pool" "control_plane_platform_node_pool" {
   cluster    = google_container_cluster.control_plane.name
 
   autoscaling {
-    min_node_count = 3
+    min_node_count = 0
     max_node_count = 50
-    location_policy = "ANY"
+    location_policy = "BALANCED"
   }
 
   node_config {
@@ -151,7 +143,11 @@ resource "google_container_node_pool" "control_plane_platform_node_pool" {
     machine_type = var.platform_instance_type
     disk_type = "pd-ssd"
     disk_size_gb = 100
+    labels = {
+      "mission-control.datastax.com/role" = "platform"
+    }
 
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     service_account = google_service_account.service_account.email
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
@@ -159,3 +155,29 @@ resource "google_container_node_pool" "control_plane_platform_node_pool" {
   }
 }
 
+resource "google_container_node_pool" "control_plane_database_node_pool" {
+  name       = "${var.prefix}-mc-cp-db-np"
+  location   = var.gcp_zone
+  cluster    = google_container_cluster.control_plane.name
+
+  autoscaling {
+    min_node_count = 0
+    max_node_count = 50
+    location_policy = "BALANCED"
+  }
+
+  node_config {
+    machine_type = var.database_instance_type
+    disk_type = "pd-ssd"
+    disk_size_gb = 100
+    labels = {
+      "mission-control.datastax.com/role" = "database"
+    }
+
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    service_account = google_service_account.service_account.email
+    oauth_scopes    = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
+}
