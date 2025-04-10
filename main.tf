@@ -139,12 +139,11 @@ resource "google_container_node_pool" "control_plane_platform_node_pool" {
   name       = "${var.prefix}-mc-cp-pl-np"
   location   = var.gcp_zone
   cluster    = google_container_cluster.control_plane.name
-  version = "latest"
 
   autoscaling {
-    min_node_count = 0
+    min_node_count = 3
     max_node_count = 50
-    location_policy = "BALANCED"
+    location_policy = "ANY"
   }
 
   node_config {
@@ -152,11 +151,7 @@ resource "google_container_node_pool" "control_plane_platform_node_pool" {
     machine_type = var.platform_instance_type
     disk_type = "pd-ssd"
     disk_size_gb = 100
-    labels = {
-      "mission-control.datastax.com/role" = "platform"
-    }
 
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     service_account = google_service_account.service_account.email
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
@@ -164,30 +159,3 @@ resource "google_container_node_pool" "control_plane_platform_node_pool" {
   }
 }
 
-resource "google_container_node_pool" "control_plane_database_node_pool" {
-  name       = "${var.prefix}-mc-cp-db-np"
-  location   = var.gcp_zone
-  cluster    = google_container_cluster.control_plane.name
-  version = "latest"
-
-  autoscaling {
-    min_node_count = 0
-    max_node_count = 50
-    location_policy = "BALANCED"
-  }
-
-  node_config {
-    machine_type = var.database_instance_type
-    disk_type = "pd-ssd"
-    disk_size_gb = 100
-    labels = {
-      "mission-control.datastax.com/role" = "database"
-    }
-
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    service_account = google_service_account.service_account.email
-    oauth_scopes    = [
-      "https://www.googleapis.com/auth/cloud-platform"
-    ]
-  }
-}
