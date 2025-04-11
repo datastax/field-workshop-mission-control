@@ -163,7 +163,32 @@ spec:
 Learn more about the cluster provisioning lifecycle from the [Provision a cluster](https://docs.datastax.com/en/mission-control/administration/control-plane/add-db-cluster.html) documentation.
 
 
-## 4 - Expand Cluster to Multi-datacenters
+## 4 - Multi-Datacenter Clusters
+
+Mission Control managed Apache Cassandra, DSE, and HCD clusters all use the same CRD and Web-UI for deployment and management.  Let's create a more advanced cluster configuration.
+
+✅ **Navigate to the project you created and click the "Create Cluster" button**
+
+✅ **Fill in the following basic information to deploy a two datacenter / 6 node DSE cluster**
+- Cluster Name: `dse-demo`
+- Type: Apache DataStax Enterprise (DSE)
+- Version: `6.9.0`
+- Datacenter Name: `dc-1`
+- Rack Name: `r1`, name click the "Add Rack": button twice.  Name the new racks `r2` and `r3`
+- Click the "Add Datacenter" button, and repeat the above - datacenter name `dc-2` and add three racks: `r1`, `r2`, `r3`.
+
+Explore the tunables within the datacenter topology box.  
+- Custom `cassandra.yaml` settings
+- Custom `dse.yaml` settings
+- Rack-level node affinity labels to enforce AZ alignment for racks
+
+✅ **Complete the following and deploy the new DSE cluster**
+- Storage Class: `standard` (scroll a ways down the form to find this)
+- Deselect "Require authentication to access cluster"
+- Click the "Create Cluster" button
+
+Observe the cluster topology and deployment status.  It will take a few minutes for the pods hosting the cluster nodes to fully deploy.
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/d43dacd3-2320-4200-9925-0d022924590c" />
 
 
 ## 5 - Cluster Scaling
