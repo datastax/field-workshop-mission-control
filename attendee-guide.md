@@ -269,6 +269,13 @@ Using the same pattern as with in-place upgrades, you can also perform an in-pla
 ✅ **Navigate to the "Observability" tab in one of your cluster and explore the "Health Metrics".  Modify the datacenter filter, and time period.**
 <img width="1379" alt="image" src="https://github.com/user-attachments/assets/95a85aa8-1a26-4ed6-a32e-832ffee878d0" />
 
+✅ **Navigate back to the `dse-demo` cluster then click on of the the nodes to view node specific metrics.**
+Observe the capatured infrastructure and C* level detail.
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/3fd1c11f-0e61-4637-8bcc-00a1f7fb1c01" />
+
+Mission Control leverages [Vector](https://vector.dev/) (by Datadog) to power the observability pipeline.  It comes with pre-configured sinks for Prometheus, and supports all of the native sinks that ship with Vector.
+
+Learn more about observability from the [Metrics](https://docs.datastax.com/en/mission-control/administration/observability/metrics.html), [Alerts](https://docs.datastax.com/en/mission-control/administration/observability/alerts.html), and [Export metrics and logs](https://docs.datastax.com/en/mission-control/administration/observability/external-metrics-logs.html) documentation.
 
 
 
