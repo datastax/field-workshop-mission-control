@@ -29,7 +29,7 @@ Access the Mission Control web-UI using the URL provided by your host.
 
 <img width="1379" alt="image" src="https://github.com/user-attachments/assets/ca4d219a-e284-4ae4-8b77-f0ee2a65c561" />
 
-Login using the following static credentials:
+✅ **Login using the following static credentials:**
 - Email: `admin@example.com`
 - Password: `password`
 
@@ -37,7 +37,7 @@ Mission Control is designed with a hierarchical structure in place.
 - One or more projects exist within Mission Control.  Each project is represented as its own namespace in the underlying Kubernetes cluster
   - Each project contains or more more clusters - Apache Cassandra, DataStax Enterprise (DSE), or HCD 
 
-Create a new project tagged with your name.
+✅ **Create a new project tagged with your name.**
 <img width="1379" alt="image" src="https://github.com/user-attachments/assets/0a42d8e1-a34e-4d07-a192-365d9f7a7ff9" />
 <img width="1379" alt="image" src="https://github.com/user-attachments/assets/3f297103-821f-46bf-9dda-99ef2dc8e6da" />
 
@@ -76,7 +76,91 @@ metadata:
 
 ## 3 - Deploy Single Datacenter Clusters
 
-Create a new project tagged with your name.
+✅ **Navigate to the project you created and click the "Create Cluster" button**
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/357f3b9a-8a24-495d-b976-aaf0f1d6ea30" />
+
+✅ **Fill in the following basic information to deploy a single node Apache Cassandra cluster**
+- Cluster Name: `cassandra-demo`
+- Type: Apache Cassandra
+- Datacenter Name: `dc-1`
+- Rack Name: `r1`
+- Storage Class: `standard` (scroll a ways down the form to find this)
+- Click the "Create Cluster" button
+
+![image](https://github.com/user-attachments/assets/4df06fd6-1dce-4518-a988-d195c2ada707)
+
+Your cluster is now visible as a tile on your screen.
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/bd9581d3-8656-4a6c-abf8-ec9e5f4c36ed" />
+
+✅ **Click the tile for your `cassandra-demo` cluster and briefly explore the tabs**.  
+<img width="1335" alt="image" src="https://github.com/user-attachments/assets/275fedd8-f808-4dc7-89ef-4d6f84f7153d" />
+
+Clusters can also be provisioned by code, either using the Web-UI or with `kubectl`.  You can expose expert mode by clicking the "Modify Cluster" button then clicking on the "Expert" button.  You can also get this from `kubectl` by looking at the `MissionControlCluster` resource type:
+
+```
+apiVersion: missioncontrol.datastax.com/v1beta2
+kind: MissionControlCluster
+metadata:
+  name: cassandra-demo
+  namespace: myname-demo-098464zq
+  resourceVersion: '196784'
+spec:
+  createIssuer: true
+  dataApi: {}
+  encryption:
+    internodeEncryption:
+      certs:
+        createCerts: true
+      enabled: true
+  k8ssandra:
+    auth: true
+    cassandra:
+      config:
+        cassandraYaml: {}
+        dseYaml: {}
+        jvmOptions:
+          gc: G1GC
+          heapSize: 1Gi
+      datacenters:
+        - config:
+            cassandraYaml: {}
+            dseYaml: {}
+          datacenterName: dc-1
+          dseWorkloads: {}
+          metadata:
+            name: cassandra-demo-dc-1
+            pods: {}
+            services:
+              additionalSeedService: {}
+              allPodsService: {}
+              dcService: {}
+              nodePortService: {}
+              seedService: {}
+          networking: {}
+          perNodeConfigMapRef: {}
+          racks:
+            - name: r1
+              nodeAffinityLabels: {}
+          size: 1
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 4Gi
+      serverType: dse
+      serverVersion: 6.9.4
+      storageConfig:
+        cassandraDataVolumeClaimSpec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Gi
+          storageClassName: standard
+      superuserSecretRef:
+        name: cassandra-demo-superuser
+```
+
+Learn more about the cluster provisioning lifecycle from the [Provision a cluster](https://docs.datastax.com/en/mission-control/administration/control-plane/add-db-cluster.html) documentation.
 
 
 ## 4 - Expand Cluster to Multi-datacenters
