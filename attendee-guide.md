@@ -82,6 +82,7 @@ metadata:
 ✅ **Fill in the following basic information to deploy a single node Apache Cassandra cluster**
 - Cluster Name: `cassandra-demo`
 - Type: Apache Cassandra
+- Server Version: `4.1.7`
 - Datacenter Name: `dc-1`
 - Rack Name: `r1`
 - Storage Class: `standard` (scroll a ways down the form to find this)
@@ -216,14 +217,58 @@ kubectl patch MissionControlCluster cassandra-demo \
 
 ## 6 - Upgrading Clusters
 
+Cluster upgrades are managed using the same lifecycle process as other modifications to the cluster - changes are rolled out to one pod at a time.
 
-## 7 - Cluster Maintenance
+✅ **Navigate to the `dse-demo` tile then cick the "Modify Cluster" button**
+
+✅ **Complete the following and modify the new `dse-demo` cluster**
+- Server Version: `6.9.4` (previously was a lower version like `6.9`)
+- Click the "Modify Cluster" button
+
+Observe the rolling upgrade process with the Web-UI as each node / pod is lifecycled and moved to the specified version.
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/19276115-d90e-4b6d-b9b5-5d1365114205" />
 
 
-## 8 - Data Maintenance
+This can also be accomplished vie `kubectl` with a Gitops pattern by modifying the `MissionControlCluster` resource.
+
+```
+apiVersion: missioncontrol.datastax.com/v1beta2
+kind: MissionControlCluster
+metadata:
+  name: dse-demo
+spec:
+  k8ssandra:
+    cassandra:
+      serverVersion: 6.9.4
+...
+```
+
+Learn more about the non-disruptive in-place cluster upgrades from the [Upgrade a DSE cluster](https://docs.datastax.com/en/mission-control/administration/control-plane/upgrade-dse-cluster.html) documentation.
 
 
-## 9 - Exploring Telemetry
+## 7 - Cluster Migration
+
+Using the same pattern as with in-place upgrades, you can also perform an in-place migration to a new cluster type (where compatible).
+
+✅ **Navigate to the `cassandra-demo` tile then cick the "Modify Cluster" button**
+
+✅ **Complete the following and modify the `cassandra-demo` cluster**
+- Type: Hyper Converged Database (HCD)
+- Click the "Modify Cluster" button
+
+
+
+## 8 - Cluster Maintenance
+
+
+## 9 - Data Maintenance
+
+
+## 10 - Exploring Telemetry
+
+✅ **Navigate to the "Observability" tab in one of your cluster and explore the "Health Metrics".  Modify the datacenter filter, and time period.**
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/95a85aa8-1a26-4ed6-a32e-832ffee878d0" />
+
 
 
 
