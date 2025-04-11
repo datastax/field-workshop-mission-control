@@ -289,4 +289,10 @@ Mission Control leverages [Vector](https://vector.dev/) (by Datadog) to power th
 Learn more about observability from the [Metrics](https://docs.datastax.com/en/mission-control/administration/observability/metrics.html), [Alerts](https://docs.datastax.com/en/mission-control/administration/observability/alerts.html), and [Export metrics and logs](https://docs.datastax.com/en/mission-control/administration/observability/external-metrics-logs.html) documentation.
 
 
+## 10 - Cleanup
+
+Once you've completed this lab please clear up unused resources.
+
+✅ **Navigate to the `cassandra-demo` and `dse-demo` clusters, click the "Terminate Cluster" button for each.**
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/e09c6721-dbb1-401f-99c4-f1d23cbe7d66" />
 
