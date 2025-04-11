@@ -258,13 +258,24 @@ Using the same pattern as with in-place upgrades, you can also perform an in-pla
 
 
 
-## 8 - Cluster Maintenance
+## 8 - `nodetool` Maintenance
+
+`nodetool` operations are exposed via the same type of operators (via YAML or Web-UI) as the other operations we've been exploring.  
+
+✅ **Navigate to the `dse-demo` tile then cick the three dots to the right of one of the nodes**
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/33ab237b-e73c-432f-89ff-6e92f93084cc" />
+
+✅ **Click on "Cleanup".**
+You will see a green toast notification that the cleanup has begin and to view progress from the Activity page.Navigate to the `dse-demo` tile then cick the three dots to the right of one of the nodes
+
+✅ **Navigate to the "Activites" page from the left nag bar.**
+Observe your actions status
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/42a3afce-277b-4776-a971-1ccd9db06d52" />
+
+Learn more about database lifecycle from the [Clean up nodes](https://docs.datastax.com/en/mission-control/administration/control-plane/cleanup.html) and other related activities documentation.
 
 
-## 9 - Data Maintenance
-
-
-## 10 - Exploring Telemetry
+## 9 - Exploring Telemetry
 
 ✅ **Navigate to the "Observability" tab in one of your cluster and explore the "Health Metrics".  Modify the datacenter filter, and time period.**
 <img width="1379" alt="image" src="https://github.com/user-attachments/assets/95a85aa8-1a26-4ed6-a32e-832ffee878d0" />
