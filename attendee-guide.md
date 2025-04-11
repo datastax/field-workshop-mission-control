@@ -193,6 +193,26 @@ Observe the cluster topology and deployment status.  It will take a few minutes 
 
 ## 5 - Cluster Scaling
 
+Mission Control supports the entire cluster lifecyle, not just provisioning.   Return to your `cassandra-demo` cluster so we can modify its configuration.
+
+✅ **Navigate to the `cassandra-demo` tile then cick the "Modify Cluster" button**
+
+Notice that some elements are read-only - those are mutable prior to initial provisioning.
+
+✅ **Scroll to the bottom of the topology box and increase "Nodes Per Rack" to 2 then cick the "Modify Cluster" button**
+<img width="1379" alt="image" src="https://github.com/user-attachments/assets/6b983843-3bef-466b-9361-efdf3ca7d19f" />
+
+Observe the lifecycle as the newly added node is created and joined to the cluster.
+
+This same task can be done via `kubectl` directly with a patch like this:
+
+```
+kubectl patch MissionControlCluster cassandra-demo \
+  -n myname-demo-098464zq \
+  --type=merge \
+  -p '{"spec":{"k8ssandra":{"cassandra":{"datacenters":[{"datacenterName":"dc-1","size":2}]}}}}'
+```
+
 
 ## 6 - Upgrading Clusters
 
