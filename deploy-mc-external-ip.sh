@@ -44,5 +44,9 @@ while true; do
   sleep 2
 done
 
-# Step 3: Print the HTTPS link
-echo "Service is available at: https://$IP"
+# Step 3: Construct dynamic DNS hostname using nip.io
+HOSTNAME="${IP}.nip.io"
+
+# Step 4: Print the HTTPS link
+echo "Service is available at: https://$HOSTNAME"
+
