@@ -133,9 +133,9 @@ resource "google_container_node_pool" "control_plane_platform_node_pool" {
   cluster    = google_container_cluster.control_plane.name
 
   autoscaling {
-    min_node_count = 0
+    min_node_count = 1
     max_node_count = 50
-    location_policy = "BALANCED"
+    location_policy = "ANY"
   }
 
   node_config {
@@ -161,9 +161,9 @@ resource "google_container_node_pool" "control_plane_database_node_pool" {
   cluster    = google_container_cluster.control_plane.name
 
   autoscaling {
-    min_node_count = 0
+    min_node_count = 2
     max_node_count = 50
-    location_policy = "BALANCED"
+    location_policy = "ANY"
   }
 
   node_config {
